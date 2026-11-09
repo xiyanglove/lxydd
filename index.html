@@ -208,6 +208,57 @@
     .masthead {
       min-height: 4.9rem;
       border-bottom: 1px solid var(--rule);
+      gap: .65rem;
+    }
+
+    .masthead-end {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: clamp(.4rem, 2vw, .85rem);
+    }
+
+    .music-toggle {
+      display: grid;
+      place-items: center;
+      flex: none;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      color: var(--pink);
+      background: var(--night);
+    }
+
+    .music-toggle:hover,
+    .music-toggle[aria-pressed="true"] {
+      border-color: #f8a9d6;
+      background: #30203e;
+    }
+
+    .music-toggle[hidden],
+    .music-toggle[aria-pressed="false"] .music-pause,
+    .music-toggle[aria-pressed="true"] .music-note {
+      display: none;
+    }
+
+    .music-toggle svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .music-status:not(:empty) {
+      position: absolute;
+      z-index: 2;
+      top: calc(100% + .35rem);
+      right: 0;
+      width: max-content;
+      padding: .4rem .65rem;
+      border: 1px solid var(--rule);
+      background: var(--night);
+      color: var(--silver);
+      font-size: .75rem;
     }
 
     .wordmark {
@@ -216,6 +267,7 @@
       gap: .7rem;
       font-size: .86rem;
       letter-spacing: .12em;
+      white-space: nowrap;
     }
 
     .wordmark svg {
@@ -234,6 +286,7 @@
       display: flex;
       align-items: center;
       gap: .65rem;
+      white-space: nowrap;
     }
 
     .masthead .index::before {
@@ -844,6 +897,17 @@
         min-height: 3.8rem;
       }
 
+      .masthead .wordmark,
+      .masthead .index {
+        gap: .4rem;
+        letter-spacing: .09em;
+      }
+
+      .masthead .wordmark svg {
+        width: 25px;
+        height: 25px;
+      }
+
       .hero-content {
         padding-top: .6rem;
         padding-bottom: 2.35rem;
@@ -977,7 +1041,24 @@
           </svg>
           两颗星靠近
         </span>
-        <span class="index">十五年 · 重逢纪念</span>
+        <div class="masthead-end">
+          <span class="index">十五年 · 重逢纪念</span>
+          <button class="music-toggle" type="button" aria-label="背景音乐《我们好像在哪儿见过》" aria-pressed="false"
+            title="播放背景音乐" hidden>
+            <svg class="music-note" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l11-2v13M9 8l11-2" />
+              <ellipse cx="6" cy="18" rx="3" ry="2" />
+              <ellipse cx="17" cy="16" rx="3" ry="2" />
+            </svg>
+            <svg class="music-pause" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M9 5v14m6-14v14" />
+            </svg>
+          </button>
+          <span class="music-status" role="status"></span>
+          <audio class="background-music" src="./assets/we-seem-to-have-met.mp3" preload="none" loop></audio>
+        </div>
       </header>
 
       <div class="hero-content">
@@ -1187,6 +1268,41 @@
   </footer>
 
   <script>
+    const backgroundMusic = document.querySelector('.background-music');
+    const musicToggle = document.querySelector('.music-toggle');
+    const musicStatus = document.querySelector('.music-status');
+
+    if (backgroundMusic.getAttribute('src')) {
+      function syncMusicToggle () {
+        const isPlaying = !backgroundMusic.paused;
+        musicToggle.setAttribute('aria-pressed', String(isPlaying));
+        musicToggle.title = isPlaying ? '暂停背景音乐' : '播放背景音乐';
+      }
+
+      function showMusicError () {
+        syncMusicToggle();
+        musicStatus.textContent = '音乐暂时无法播放';
+      }
+
+      backgroundMusic.addEventListener('play', syncMusicToggle);
+      backgroundMusic.addEventListener('pause', syncMusicToggle);
+      backgroundMusic.addEventListener('error', showMusicError);
+      musicToggle.addEventListener('click', async () => {
+        musicStatus.textContent = '';
+        if (!backgroundMusic.paused) {
+          backgroundMusic.pause();
+          return;
+        }
+
+        try {
+          await backgroundMusic.play();
+        } catch (error) {
+          if (error.name !== 'AbortError') showMusicError();
+        }
+      });
+      musicToggle.hidden = false;
+    }
+
     const reunionCount = document.querySelector('.reunion-count');
     const reunionDays = reunionCount.querySelector('strong');
     const reunionDate = document.querySelector('.reunion-date time');

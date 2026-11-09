@@ -1284,23 +1284,37 @@
         musicStatus.textContent = '音乐暂时无法播放';
       }
 
-      backgroundMusic.addEventListener('play', syncMusicToggle);
-      backgroundMusic.addEventListener('pause', syncMusicToggle);
-      backgroundMusic.addEventListener('error', showMusicError);
-      musicToggle.addEventListener('click', async () => {
+      async function playMusic () {
         musicStatus.textContent = '';
-        if (!backgroundMusic.paused) {
-          backgroundMusic.pause();
-          return;
-        }
-
         try {
           await backgroundMusic.play();
         } catch (error) {
-          if (error.name !== 'AbortError') showMusicError();
+          if (error.name !== 'AbortError' && error.name !== 'NotAllowedError') showMusicError();
         }
+      }
+
+      function clearMusicFallback () {
+        document.removeEventListener('click', startMusicOnInteraction, true);
+      }
+
+      function startMusicOnInteraction (event) {
+        if (!event.isTrusted) return;
+        clearMusicFallback();
+        if (backgroundMusic.paused && !musicToggle.contains(event.target)) playMusic();
+      }
+
+      backgroundMusic.addEventListener('play', syncMusicToggle);
+      backgroundMusic.addEventListener('pause', syncMusicToggle);
+      backgroundMusic.addEventListener('error', showMusicError);
+      backgroundMusic.addEventListener('playing', clearMusicFallback, { once: true });
+      document.addEventListener('click', startMusicOnInteraction, true);
+      musicToggle.addEventListener('click', () => {
+        clearMusicFallback();
+        if (backgroundMusic.paused) playMusic();
+        else backgroundMusic.pause();
       });
       musicToggle.hidden = false;
+      playMusic();
     }
 
     const reunionCount = document.querySelector('.reunion-count');

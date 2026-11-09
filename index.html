@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d20">
+  <meta name="description" content="十五载春秋流转，原来最好的相逢，是与你再逢。一片星空，一封写给我们的信。">
+  <title>十五年后的我们</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #0a0d20;
+      --silver: #f7f3ff;
+      --pink: #ffd2e8;
+      --muted: #c1b7ce;
+      --rule: #f6dcff29;
+      --serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --mono: "SF Mono", Menlo, Consolas, monospace;
+      --gutter: clamp(1.25rem, 4.7vw, 5rem);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--night);
+      color: var(--silver);
+      font-family: var(--sans);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    svg {
+      display: block;
+    }
+
+    ::selection {
+      background: #f8c5e1;
+      color: #201528;
+    }
+
+    :focus-visible {
+      outline: 2px solid #f9b7df;
+      outline-offset: 5px;
+    }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      min-height: 100svh;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 36%, #242347 0, transparent 55%),
+        radial-gradient(ellipse at 13% 60%, #30203d 0, transparent 50%),
+        radial-gradient(ellipse at 89% 45%, #141f43 0, transparent 47%),
+        #0a0d20;
+    }
+
+    .nebula {
+      position: absolute;
+      z-index: -3;
+      inset: -16%;
+      background:
+        radial-gradient(ellipse 33% 18% at 34% 50%, #d16eb35c, #a051a62e 53%, transparent 100%),
+        radial-gradient(ellipse 43% 15% at 62% 40%, #997ce553, #7159b728 60%, transparent 100%),
+        radial-gradient(ellipse 23% 11% at 72% 32%, #d2a1ff3d, transparent 100%),
+        radial-gradient(ellipse 41% 27% at 47% 52%, #542f8173, transparent 100%);
+      opacity: .8;
+      transform: rotate(-13deg);
+      animation: nebula-drift 22s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes nebula-drift {
+      from {
+        transform: translate3d(-5%, -2%, 0) rotate(-16deg) scale(1.03);
+        opacity: .7;
+      }
+
+      to {
+        transform: translate3d(5%, 3%, 0) rotate(-7deg) scale(1.11);
+        opacity: 1;
+      }
+    }
+
+    .starfield,
+    .twinkle-field {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .meteor-shower {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .meteor {
+      --head: #fff0fa;
+      --trail: #ffa6db;
+      --angle: 22deg;
+      --distance: clamp(4.5rem, 16vw, 15rem);
+      --drop: clamp(1.8rem, 6.5vw, 6rem);
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      opacity: 0;
+      animation: meteor-flight 11.6s linear var(--delay) infinite;
+    }
+
+    .meteor--silver {
+      --head: #f7f8ff;
+      --trail: #b9cbff;
+      --angle: 158deg;
+      --distance: clamp(-15rem, -16vw, -4.5rem);
+    }
+
+    .meteor::before,
+    .meteor::after {
+      position: absolute;
+      content: "";
+    }
+
+    .meteor::before {
+      right: 0;
+      top: -1px;
+      width: clamp(2.4rem, 7.2vw, 6.5rem);
+      height: 2px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent, var(--trail) 74%, var(--head));
+      filter: drop-shadow(0 0 4px var(--trail));
+      transform: rotate(var(--angle));
+      transform-origin: right center;
+    }
+
+    .meteor::after {
+      inset: -2px auto auto -2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--head);
+      box-shadow: 0 0 7px 2px var(--trail);
+    }
+
+    @keyframes meteor-flight {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+      }
+
+      2.5% {
+        opacity: .95;
+      }
+
+      8.5% {
+        opacity: .85;
+      }
+
+      14%,
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--distance), var(--drop), 0);
+      }
+    }
+
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(180deg, #090c1c50, transparent 23%, transparent 45%, #0a0d207d 75%, #0a0d20 100%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .masthead,
+    .chapter,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-inline: var(--gutter);
+    }
+
+    .masthead {
+      min-height: 4.9rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      font-size: .86rem;
+      letter-spacing: .12em;
+    }
+
+    .wordmark svg {
+      width: 29px;
+      height: 29px;
+      color: var(--pink);
+    }
+
+    .index {
+      color: var(--muted);
+      font: .68rem/1.5 var(--mono);
+      letter-spacing: .16em;
+    }
+
+    .masthead .index {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+    }
+
+    .masthead .index::before {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #f2bdde;
+      box-shadow: 0 0 10px #ffbce5;
+      content: "";
+    }
+
+    .hero-content {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem var(--gutter) 2rem;
+    }
+
+    .observatory {
+      position: relative;
+      width: min(100%, 65rem);
+      height: clamp(19rem, 40svh, 25rem);
+      margin-top: -1rem;
+    }
+
+    .sky-map {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .orbit {
+      fill: none;
+      stroke: #c7bae43b;
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .orbit-dashed {
+      stroke: #b7a4d23e;
+      stroke-dasharray: 1 6;
+      stroke-linecap: round;
+    }
+
+    .route {
+      stroke-width: 1;
+    }
+
+    .tail {
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+    }
+
+    .tail-light {
+      opacity: .7;
+      stroke-width: 5;
+      filter: blur(3px);
+    }
+
+    .coordinate {
+      fill: none;
+      stroke: #dcc6f067;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .moon {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      width: clamp(7.1rem, 14.6vw, 12.6rem);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .moon::before,
+    .moon::after {
+      position: absolute;
+      border-radius: 50%;
+      content: "";
+    }
+
+    .moon::before {
+      inset: -65%;
+      background: radial-gradient(circle closest-side,
+          #fff9f4b3 38%, #fff5f19c 42%, #f5dcff6e 48%,
+          #edbdf64a 56%, #d0a6f022 72%, #b898e909 87%, transparent);
+    }
+
+    .moon::after {
+      inset: 2%;
+      background: radial-gradient(circle at 46% 40%, #fffefa 15%, #fdf9ff 57%, #eee3ff 100%);
+      box-shadow: inset 0 0 0 1px #fff9f4b3, 0 0 12px #fff4ed9c, 0 0 35px #ffe0f459;
+    }
+
+    .sky-label {
+      position: absolute;
+      top: 53%;
+      display: grid;
+      gap: .45rem;
+      color: var(--muted);
+      text-align: left;
+      font: .62rem/1 var(--mono);
+      letter-spacing: .18em;
+    }
+
+    .sky-label strong {
+      color: var(--pink);
+      font-size: .72rem;
+      font-weight: 500;
+    }
+
+    .sky-label--pink {
+      left: 1.5%;
+    }
+
+    .sky-label--silver {
+      right: 1.5%;
+      text-align: right;
+    }
+
+    .sky-label--silver strong {
+      color: #e0e3ff;
+    }
+
+    .sky-label--pink::after,
+    .sky-label--silver::after {
+      width: 1.6rem;
+      height: 1px;
+      background: #d4b7da69;
+      content: "";
+    }
+
+    .sky-label--silver::after {
+      justify-self: end;
+    }
+
+    .spark {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      width: var(--size);
+      height: var(--size);
+      overflow: visible;
+      color: var(--color, #f9d2eb);
+      opacity: var(--brightness, .72);
+      transform: translate(-50%, -50%) rotate(var(--tilt, 0deg));
+      filter: drop-shadow(0 0 5px currentColor);
+      animation: twinkle var(--period, 5s) var(--delay, 0s) ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes twinkle {
+      to {
+        opacity: .28;
+      }
+    }
+
+    .background-star {
+      animation-name: background-twinkle;
+    }
+
+    .background-star--dot {
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 4px currentColor;
+      filter: none;
+    }
+
+    @keyframes background-twinkle {
+      from {
+        opacity: .13;
+      }
+
+      to {
+        opacity: .96;
+      }
+    }
+
+    .moving-star {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: 35px;
+      height: 35px;
+      color: var(--glow);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .moving-star::before {
+      position: absolute;
+      inset: -22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow) 0, transparent 65%);
+      opacity: .36;
+      animation: star-breathe 2.2s var(--breathe-delay) ease-in-out infinite alternate;
+      content: "";
+    }
+
+    @keyframes star-breathe {
+      from {
+        opacity: .23;
+        transform: scale(.86);
+      }
+
+      to {
+        opacity: .68;
+        transform: scale(1.2);
+      }
+    }
+
+    .moving-star svg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 9px currentColor);
+    }
+
+    .moving-star--pink {
+      --glow: #ff9bd9;
+      --x: 47.2%;
+      --y: 77.27%;
+      --name-offset: -12px;
+      --name-color: var(--pink);
+      --breathe-delay: -.6s;
+    }
+
+    .moving-star--silver {
+      --glow: #c7d4ff;
+      --x: 52.8%;
+      --y: 77.27%;
+      --name-offset: 12px;
+      --name-color: #f2f3ff;
+      --breathe-delay: -1.4s;
+    }
+
+    .star-name {
+      position: absolute;
+      top: calc(100% - 1px);
+      left: calc(50% + var(--name-offset));
+      color: var(--name-color);
+      font: 600 .75rem/1.2 var(--mono);
+      letter-spacing: .08em;
+      text-shadow: 0 1px 4px var(--night), 0 0 8px var(--glow);
+      transform: translateX(-50%);
+    }
+
+    .confluence {
+      position: absolute;
+      top: 77.27%;
+      left: 50%;
+      width: clamp(7rem, 18vw, 15rem);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff0fb 0, #f8bbff91 14%, #ca97f432 34%, transparent 69%);
+      opacity: .32;
+      transform: translate(-50%, -50%) scale(var(--burst, 1));
+      pointer-events: none;
+    }
+
+    .dedication {
+      --heart-size: min(calc(100vw - 1rem), 31.5rem);
+      position: relative;
+      z-index: 1;
+      width: var(--heart-size);
+      aspect-ratio: 1.12;
+      margin-top: clamp(-1.5rem, -2.4svh, -.75rem);
+      padding-top: calc(var(--heart-size) * .225);
+      text-align: center;
+    }
+
+    .dedication-heart {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .heart-star {
+      color: #ffb5de;
+      fill: currentColor;
+      filter: drop-shadow(0 0 4px currentColor);
+      opacity: .86;
+      animation: heart-star-twinkle var(--period, 3.3s) var(--delay, -.6s) ease-in-out infinite;
+    }
+
+    .heart-star:nth-child(even) {
+      color: #f0f3ff;
+    }
+
+    .heart-star:nth-child(5n + 2) {
+      --period: 3.8s;
+      --delay: -2.3s;
+    }
+
+    .heart-star:nth-child(5n + 3) {
+      --period: 4.2s;
+      --delay: -1.5s;
+    }
+
+    .heart-star:nth-child(5n + 4) {
+      --period: 3.5s;
+      --delay: -3s;
+    }
+
+    .heart-star:nth-child(5n + 5) {
+      --period: 4.5s;
+      --delay: -3.6s;
+    }
+
+    @keyframes heart-star-twinkle {
+
+      0%,
+      100% {
+        opacity: .62;
+      }
+
+      45% {
+        opacity: 1;
+      }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      margin: 0;
+      color: var(--pink);
+      font: .66rem/1.5 var(--mono);
+      letter-spacing: .24em;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      width: 1.2rem;
+      height: 1px;
+      background: currentColor;
+      opacity: .44;
+      content: "";
+    }
+
+    h1 {
+      margin: .8rem 0 .7rem;
+      font: 400 clamp(1.5rem, 3vw, 2.05rem)/1.15 var(--serif);
+      letter-spacing: .09em;
+      text-shadow: 0 3px 26px #070819b8;
+    }
+
+    .title-finish {
+      display: block;
+      margin-top: .14em;
+      color: var(--silver);
+      font-size: clamp(1.5rem, 3.5vw, 1.85rem);
+      letter-spacing: .045em;
+      text-shadow: 0 0 34px #eeb5ed51;
+      white-space: nowrap;
+    }
+
+    .tagline {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: .08em;
+      text-wrap: pretty;
+    }
+
+    .reunion {
+      display: grid;
+      justify-items: center;
+      gap: .25rem;
+      margin-top: .8rem;
+    }
+
+    .reunion-count {
+      margin: 0;
+      color: var(--silver);
+      font-size: .86rem;
+      line-height: 1.5;
+      letter-spacing: .08em;
+    }
+
+    .reunion-count strong {
+      color: var(--pink);
+      font: 600 1.18rem/1.2 var(--mono);
+    }
+
+    .reunion-date {
+      color: var(--muted);
+      font: .68rem/1.5 var(--mono);
+      letter-spacing: .08em;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .65rem;
+      margin-top: .75rem;
+    }
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      min-height: 46px;
+      padding: .6rem 1.15rem;
+      border: 1px solid #edd4f34d;
+      border-radius: 2px;
+      color: var(--silver);
+      background: #141329aa;
+      font-size: .88rem;
+      letter-spacing: .08em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+
+    .action[hidden] {
+      display: none;
+    }
+
+    .action svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+
+    .action--letter {
+      border-color: #efb9db;
+      color: #2b1832;
+      background: #f1c8e0;
+    }
+
+    .action--letter:hover {
+      background: #ffdef0;
+    }
+
+    .action--replay:hover {
+      border-color: #f0c4e6a6;
+      background: #25203b;
+    }
+
+    .action:active {
+      transform: translateY(1px);
+    }
+
+    .chapter {
+      min-height: 3.8rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .chapter span:last-child {
+      text-align: right;
+    }
+
+    .chapter-glyph {
+      color: #cfa4d1;
+      font-size: .9rem;
+    }
+
+    .letter-section {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      justify-items: center;
+      padding: clamp(4rem, 9vw, 8.5rem) var(--gutter) clamp(4rem, 8vw, 7rem);
+      background:
+        radial-gradient(ellipse at 50% 37%, #29223e 0, #0a0d2000 73%),
+        var(--night);
+    }
+
+    .letter-section::before {
+      position: absolute;
+      z-index: -1;
+      inset: 5% 4%;
+      background-image:
+        radial-gradient(circle, #e5d3ff 0 1px, transparent 1.6px),
+        radial-gradient(circle, #ffd3ec 0 1px, transparent 1.5px);
+      background-position: 27px 8px, 68px 53px;
+      background-size: 163px 137px, 203px 171px;
+      opacity: .29;
+      content: "";
+    }
+
+    .letter-section>.eyebrow {
+      margin-bottom: 2rem;
+    }
+
+    .letter {
+      position: relative;
+      width: min(100%, 43rem);
+      padding: clamp(2.4rem, 5.2vw, 4.75rem) clamp(1.6rem, 7vw, 6.1rem);
+      background:
+        repeating-linear-gradient(105deg, #80566e04 0 1px, transparent 1px 5px),
+        radial-gradient(ellipse at 86% 9%, #fceaf2, transparent 61%),
+        #efe1e5;
+      color: #382733;
+      box-shadow: 0 0 70px #dba6e128, 0 20px 60px #0305126b;
+    }
+
+    .letter::before {
+      position: absolute;
+      inset: 11px;
+      border: 1px solid #80566e5c;
+      content: "";
+      pointer-events: none;
+    }
+
+    .letter::after {
+      position: absolute;
+      inset: 15px;
+      border: 1px solid #80566e25;
+      content: "";
+      pointer-events: none;
+    }
+
+    .letter-mark {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      color: #784765;
+      font: .69rem/1.5 var(--mono);
+      letter-spacing: .17em;
+    }
+
+    .letter-mark svg {
+      width: 35px;
+      height: 35px;
+      flex: none;
+    }
+
+    .letter h2 {
+      margin: 0 0 1.5rem;
+      color: #382433;
+      font: 500 clamp(1.5rem, 4.4vw, 2.65rem)/1.4 var(--serif);
+      text-wrap: balance;
+    }
+
+    .letter p {
+      margin: 0 0 1.1rem;
+      font: 400 1.06rem/1.94 var(--serif);
+      text-wrap: pretty;
+    }
+
+    .letter .signature {
+      margin: 2rem 0 0;
+      color: #704460;
+      text-align: right;
+    }
+
+    .signature::before {
+      display: block;
+      width: 2.6rem;
+      height: 1px;
+      margin: 0 0 .65rem auto;
+      background: #80566e6b;
+      content: "";
+    }
+
+    .footer {
+      min-height: 4.75rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+    }
+
+    .footer a {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      gap: .45rem;
+      font-size: .83rem;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: var(--pink);
+    }
+
+    @media (any-hover: hover) and (any-pointer: fine) {
+      :root {
+        --heart-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath fill='%23ff79bd' stroke='%23fff1f8' stroke-width='1.6' stroke-linejoin='round' d='M15 26.1 4.7 15.7C-.2 10.7 3.2 4.6 8.4 4.6c2.9 0 5.2 1.8 6.6 4.1 1.4-2.3 3.7-4.1 6.6-4.1 5.2 0 8.6 6.1 3.7 11.1L15 26.1Z'/%3E%3C/svg%3E") 15 14;
+        cursor: var(--heart-cursor), auto;
+      }
+
+      a,
+      button,
+      .action {
+        cursor: var(--heart-cursor), pointer;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .masthead {
+        min-height: 3.8rem;
+      }
+
+      .hero-content {
+        padding-top: .6rem;
+        padding-bottom: 2.35rem;
+      }
+
+      .observatory {
+        height: clamp(17rem, 39svh, 21rem);
+        margin-top: -.4rem;
+      }
+
+      .moon {
+        top: 41%;
+        width: clamp(7rem, 32vw, 9rem);
+      }
+
+      .sky-label {
+        top: 56%;
+        font-size: .54rem;
+        letter-spacing: .08em;
+      }
+
+      .sky-label strong {
+        font-size: .62rem;
+      }
+
+      .sky-label--pink {
+        left: 0;
+      }
+
+      .sky-label--silver {
+        right: 0;
+      }
+
+      .moving-star {
+        width: 27px;
+        height: 27px;
+      }
+
+      .dedication {
+        aspect-ratio: .86;
+        padding-top: calc(var(--heart-size) * .29);
+      }
+
+      h1 {
+        margin: .45rem 0 .4rem;
+        font-size: clamp(1.22rem, 4.9vw, 1.7rem);
+      }
+
+      .title-finish {
+        font-size: clamp(.85rem, 5.55vw, 1.85rem);
+      }
+
+      .tagline {
+        max-width: 22em;
+        margin-inline: auto;
+        font-size: 1rem;
+        letter-spacing: .02em;
+      }
+
+      .actions {
+        gap: .45rem;
+        margin-top: .65rem;
+      }
+
+      .action {
+        gap: .35rem;
+        padding-inline: .65rem;
+        font-size: .8rem;
+      }
+
+      .action svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .chapter {
+        min-height: 3.3rem;
+      }
+
+      .index {
+        font-size: .61rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .nebula,
+      .spark,
+      .heart-star,
+      .moving-star::before {
+        animation: none;
+      }
+
+      .meteor-shower {
+        display: none;
+      }
+
+      .action {
+        transition: none;
+      }
+
+      .action--replay {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section class="hero" id="sky" aria-labelledby="title">
+      <div class="nebula" aria-hidden="true"></div>
+      <canvas class="starfield" aria-hidden="true"></canvas>
+      <div class="twinkle-field" aria-hidden="true"></div>
+      <div class="meteor-shower" aria-hidden="true">
+        <span class="meteor" style="--x:9%;--y:15%;--delay:2s"></span>
+        <span class="meteor meteor--silver" style="--x:92%;--y:19%;--delay:4.9s"></span>
+        <span class="meteor" style="--x:5%;--y:38%;--delay:7.8s"></span>
+        <span class="meteor meteor--silver" style="--x:95%;--y:34%;--delay:10.7s"></span>
+      </div>
+      <header class="masthead">
+        <span class="wordmark">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="11.5" fill="none" stroke="currentColor" opacity=".55" />
+            <path d="M16 6c.6 6.5 2.7 8.4 9 10-6.3 1.6-8.4 3.5-9 10-.6-6.5-2.7-8.4-9-10 6.3-1.6 8.4-3.5 9-10Z"
+              fill="currentColor" />
+            <circle cx="26.5" cy="7" r="1.7" fill="#e4e6ff" />
+          </svg>
+          两颗星靠近
+        </span>
+        <span class="index">十五年 · 重逢纪念</span>
+      </header>
+
+      <div class="hero-content">
+        <div class="observatory" role="img" aria-label="淡粉色星星 DD 和银白色星星 LXY 在满月下相遇">
+          <svg class="sky-map" viewBox="0 0 1000 440" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="pink-route-color">
+                <stop stop-color="#f0a9db" stop-opacity=".16" />
+                <stop offset="1" stop-color="#ffd0eb" stop-opacity=".65" />
+              </linearGradient>
+              <linearGradient id="silver-route-color">
+                <stop stop-color="#dce3ff" stop-opacity=".7" />
+                <stop offset="1" stop-color="#a6b6f7" stop-opacity=".16" />
+              </linearGradient>
+              <path id="pink-route" d="M 37 311 C 150 386, 367 380, 488 342 Q 508 331, 472 340" />
+              <path id="silver-route" d="M 963 282 C 842 233, 638 237, 514 324 Q 488 344, 528 340" />
+              <path id="diamond"
+                d="M 12 0 C 12.9 7.4 16.6 11.1 24 12 C 16.6 12.9 12.9 16.6 12 24 C 11.1 16.6 7.4 12.9 0 12 C 7.4 11.1 11.1 7.4 12 0 Z" />
+            </defs>
+            <ellipse class="orbit" cx="500" cy="201" rx="307" ry="135" transform="rotate(-8 500 201)" />
+            <ellipse class="orbit orbit-dashed" cx="500" cy="201" rx="324" ry="148" transform="rotate(-8 500 201)" />
+            <ellipse class="orbit" cx="500" cy="187" rx="240" ry="103" transform="rotate(13 500 187)" opacity=".55" />
+            <path class="orbit orbit-dashed" d="M 500 28 V 354 M 154 201 H 846" opacity=".72" />
+            <path class="coordinate"
+              d="M 500 30 v 13 m -7 -6.5 h 14 M 263 134 v 9 m -5 -4.5 h 10 M 755 96 v 9 m -5 -4.5 h 10 M 807 201 v 12 m -6 -6 h 12 M 192 219 v 12 m -6 -6 h 12" />
+            <use class="orbit route" href="#pink-route" style="stroke:url(#pink-route-color)" />
+            <use class="orbit route" href="#silver-route" style="stroke:url(#silver-route-color)" />
+            <circle cx="37" cy="311" r="3" fill="#ffd2ea" opacity=".72" />
+            <circle cx="963" cy="282" r="3" fill="#dce3ff" opacity=".72" />
+            <use class="tail tail-light" data-tail="pink" href="#pink-route" stroke="#ffabd9" visibility="hidden" />
+            <use class="tail" data-tail="pink" href="#pink-route" stroke="#ffcee9" visibility="hidden" />
+            <use class="tail tail-light" data-tail="silver" href="#silver-route" stroke="#b5c7ff" visibility="hidden" />
+            <use class="tail" data-tail="silver" href="#silver-route" stroke="#edf0ff" visibility="hidden" />
+          </svg>
+
+          <div class="moon"></div>
+
+          <span class="sky-label sky-label--pink"><strong>01</strong>淡粉星</span>
+          <span class="sky-label sky-label--silver"><strong>02</strong>银白星</span>
+
+          <svg class="spark" viewBox="0 0 24 24" style="--x:18%;--y:28%;--size:15px;--delay:-1s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:29%;--y:14%;--size:9px;--color:#f1eeff;--delay:-3s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:11%;--y:75%;--size:12px;--color:#f1eeff;--delay:-2s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:34%;--y:51%;--size:10px;--delay:-4s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24"
+            style="--x:67%;--y:22%;--size:22px;--color:#f1eeff;--period:6.5s;--delay:-2s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:85%;--y:32%;--size:11px;--delay:-3.5s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:72%;--y:64%;--size:12px;--delay:-1.5s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:87%;--y:81%;--size:14px;--color:#f1eeff;--period:7s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+          <svg class="spark" viewBox="0 0 24 24" style="--x:39%;--y:10%;--size:9px;--delay:-2.7s">
+            <use href="#diamond" fill="currentColor" />
+          </svg>
+
+          <div class="confluence"></div>
+          <div class="moving-star moving-star--pink">
+            <svg viewBox="0 0 40 40">
+              <use href="#diamond" fill="currentColor" transform="translate(4 4) scale(1.3333)" />
+              <use href="#diamond" fill="#fff1f8" transform="translate(10 10) scale(.8333)" />
+              <circle cx="20" cy="20" r="2.6" fill="#fff" />
+            </svg>
+            <span class="star-name">DD</span>
+          </div>
+          <div class="moving-star moving-star--silver">
+            <svg viewBox="0 0 40 40">
+              <use href="#diamond" fill="currentColor" transform="translate(4 4) scale(1.3333)" />
+              <use href="#diamond" fill="#f5f4ff" transform="translate(10 10) scale(.8333)" />
+              <circle cx="20" cy="20" r="2.6" fill="#fff" />
+            </svg>
+            <span class="star-name">LXY</span>
+          </div>
+        </div>
+
+        <div class="dedication">
+          <svg class="dedication-heart" viewBox="0 0 1000 950" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <path id="dedication-heart-shape" vector-effect="non-scaling-stroke"
+                d="M500 197C420 72 273 14 144 78 30 135 0 253 34 394 72 585 231 774 500 919 769 774 928 585 966 394 1000 253 970 135 856 78 727 14 580 72 500 197Z" />
+              <g id="heart-star-shape">
+                <use href="#diamond" transform="translate(-20 -20) scale(1.6667)" />
+              </g>
+            </defs>
+            <g class="heart-stars">
+              <use class="heart-star" href="#heart-star-shape" x="500.0" y="197.0" />
+              <use class="heart-star" href="#heart-star-shape" x="463.3" y="149.2" />
+              <use class="heart-star" href="#heart-star-shape" x="418.9" y="109.0" />
+              <use class="heart-star" href="#heart-star-shape" x="367.9" y="78.0" />
+              <use class="heart-star" href="#heart-star-shape" x="311.3" y="58.2" />
+              <use class="heart-star" href="#heart-star-shape" x="251.5" y="51.7" />
+              <use class="heart-star" href="#heart-star-shape" x="192.3" y="59.8" />
+              <use class="heart-star" href="#heart-star-shape" x="136.6" y="81.9" />
+              <use class="heart-star" href="#heart-star-shape" x="88.0" y="116.8" />
+              <use class="heart-star" href="#heart-star-shape" x="51.1" y="164.1" />
+              <use class="heart-star" href="#heart-star-shape" x="29.1" y="219.7" />
+              <use class="heart-star" href="#heart-star-shape" x="21.0" y="279.2" />
+              <use class="heart-star" href="#heart-star-shape" x="23.9" y="339.1" />
+              <use class="heart-star" href="#heart-star-shape" x="34.8" y="398.0" />
+              <use class="heart-star" href="#heart-star-shape" x="50.5" y="455.8" />
+              <use class="heart-star" href="#heart-star-shape" x="72.8" y="511.4" />
+              <use class="heart-star" href="#heart-star-shape" x="100.9" y="564.8" />
+              <use class="heart-star" href="#heart-star-shape" x="133.8" y="615.2" />
+              <use class="heart-star" href="#heart-star-shape" x="170.7" y="662.5" />
+              <use class="heart-star" href="#heart-star-shape" x="210.8" y="706.7" />
+              <use class="heart-star" href="#heart-star-shape" x="254.5" y="748.8" />
+              <use class="heart-star" href="#heart-star-shape" x="300.2" y="787.8" />
+              <use class="heart-star" href="#heart-star-shape" x="347.9" y="824.2" />
+              <use class="heart-star" href="#heart-star-shape" x="397.1" y="858.0" />
+              <use class="heart-star" href="#heart-star-shape" x="448.2" y="889.7" />
+              <use class="heart-star" href="#heart-star-shape" x="500.0" y="919.0" />
+              <use class="heart-star" href="#heart-star-shape" x="551.8" y="889.7" />
+              <use class="heart-star" href="#heart-star-shape" x="602.9" y="858.0" />
+              <use class="heart-star" href="#heart-star-shape" x="652.1" y="824.2" />
+              <use class="heart-star" href="#heart-star-shape" x="699.8" y="787.8" />
+              <use class="heart-star" href="#heart-star-shape" x="745.5" y="748.8" />
+              <use class="heart-star" href="#heart-star-shape" x="789.2" y="706.7" />
+              <use class="heart-star" href="#heart-star-shape" x="829.3" y="662.5" />
+              <use class="heart-star" href="#heart-star-shape" x="866.2" y="615.2" />
+              <use class="heart-star" href="#heart-star-shape" x="899.1" y="564.8" />
+              <use class="heart-star" href="#heart-star-shape" x="927.2" y="511.4" />
+              <use class="heart-star" href="#heart-star-shape" x="949.5" y="455.8" />
+              <use class="heart-star" href="#heart-star-shape" x="965.2" y="398.0" />
+              <use class="heart-star" href="#heart-star-shape" x="976.1" y="339.1" />
+              <use class="heart-star" href="#heart-star-shape" x="979.0" y="279.2" />
+              <use class="heart-star" href="#heart-star-shape" x="970.9" y="219.7" />
+              <use class="heart-star" href="#heart-star-shape" x="948.9" y="164.1" />
+              <use class="heart-star" href="#heart-star-shape" x="912.0" y="116.8" />
+              <use class="heart-star" href="#heart-star-shape" x="863.4" y="81.9" />
+              <use class="heart-star" href="#heart-star-shape" x="807.7" y="59.8" />
+              <use class="heart-star" href="#heart-star-shape" x="748.5" y="51.7" />
+              <use class="heart-star" href="#heart-star-shape" x="688.7" y="58.2" />
+              <use class="heart-star" href="#heart-star-shape" x="632.1" y="78.0" />
+              <use class="heart-star" href="#heart-star-shape" x="581.1" y="109.0" />
+              <use class="heart-star" href="#heart-star-shape" x="536.7" y="149.2" />
+            </g>
+          </svg>
+          <p class="eyebrow" lang="en">AFTER FIFTEEN YEARS</p>
+          <h1 id="title">十五载春秋流转<span class="title-finish">原来最好的相逢，是与你再逢</span></h1>
+          <p class="tagline">往后的夜空，我们一起看。</p>
+          <div class="reunion">
+            <p class="reunion-count" hidden>重逢至今 <strong></strong> 天</p>
+            <span class="reunion-date"><time datetime="2026-06-01">2026.06.01</time> · 儿童节</span>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="action action--letter" href="#letter">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <rect x="2.5" y="4.5" width="15" height="11" rx="1" />
+              <path d="m3 6 7 5 7-5" />
+            </svg>
+            读一封信
+          </a>
+          <button class="action action--replay" type="button" hidden>
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 8a6.2 6.2 0 1 1 0 4.2M4 4v4h4" />
+            </svg>
+            重逢相遇
+          </button>
+        </div>
+      </div>
+
+      <div class="chapter" aria-hidden="true">
+        <span class="index">01 / 月下重逢</span>
+        <span class="chapter-glyph">✧</span>
+        <span class="index">02 / 写给我们</span>
+      </div>
+    </section>
+
+    <section class="letter-section" id="letter" aria-labelledby="letter-title">
+      <p class="eyebrow">02 / 写给我们</p>
+      <article class="letter">
+        <div class="letter-mark" aria-hidden="true">
+          <span lang="en">A LETTER TO US</span>
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor">
+            <circle cx="20" cy="20" r="17" opacity=".55" />
+            <path d="M20 7c.9 8.8 4.2 12.1 13 13-8.8.9-12.1 4.2-13 13-.9-8.8-4.2-12.1-13-13 8.8-.9 12.1-4.2 13-13Z" />
+            <circle cx="29" cy="10" r="1.6" fill="currentColor" />
+          </svg>
+        </div>
+        <!-- 可以在这里换成你们的名字、纪念日，或添上一段只属于你们的回忆。 -->
+        <h2 id="letter-title">写给十五年后的我们</h2>
+        <p>当年一别，我们踩碎了满地的月光，各自扎进浩瀚的风霜。隔着错落的春秋，我曾以为走散的人再无归期。直到命运的长风吹散迷雾，你再次微笑着，站在了我的面前。</p>
+        <p>抬眸的一瞬，万物失声。你眼底依旧揉碎了当年的温柔，而在这熟悉的目光里，岁月带来的隔阂悉数和解。原来那些错过的光阴，不过是命运踩碎的星光，只为在今天，铺成一条让我们重新相逢的路。</p>
+        <p>别来无恙。漫长的荒野终于走到了尽头，余生，我们并肩相依。</p>
+        <p class="signature">现在的我们</p>
+      </article>
+    </section>
+  </main>
+  <footer class="footer">
+    <span class="index">两颗星靠近 · XV</span>
+    <a href="#sky">回到星空 <span aria-hidden="true">↑</span></a>
+  </footer>
+
+  <script>
+    const reunionCount = document.querySelector('.reunion-count');
+    const reunionDays = reunionCount.querySelector('strong');
+    const reunionDate = document.querySelector('.reunion-date time');
+    const millisecondsPerDay = 24 * 60 * 60 * 1000;
+    const beijingOffset = 8 * 60 * 60 * 1000;
+    const reunionDay = Date.parse(reunionDate.dateTime) / millisecondsPerDay;
+    let reunionTimer;
+
+    function updateReunionDays () {
+      const beijingNow = Date.now() + beijingOffset;
+      const today = Math.floor(beijingNow / millisecondsPerDay);
+      reunionDays.textContent = Math.max(0, today - reunionDay);
+      reunionCount.hidden = false;
+
+      clearTimeout(reunionTimer);
+      const nextMidnight = (today + 1) * millisecondsPerDay;
+      reunionTimer = setTimeout(updateReunionDays, nextMidnight - beijingNow);
+    }
+
+    updateReunionDays();
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) updateReunionDays();
+    });
+
+    const sky = document.querySelector('.starfield');
+    const skyContext = sky.getContext('2d');
+    const twinkleField = document.querySelector('.twinkle-field');
+    const svgNamespace = 'http://www.w3.org/2000/svg';
+
+    function paintSky () {
+      if (!skyContext) return;
+
+      const { width, height } = sky.getBoundingClientRect();
+      if (!width || !height) return;
+
+      const scale = Math.min(window.devicePixelRatio || 1, 2);
+      sky.width = Math.round(width * scale);
+      sky.height = Math.round(height * scale);
+      skyContext.setTransform(scale, 0, 0, scale, 0, 0);
+      const twinkles = document.createDocumentFragment();
+
+      // A repeatable star map keeps the scene composed the same way on every replay.
+      let seed = 1515;
+      function random () {
+        seed = (Math.imul(1664525, seed) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      }
+
+      function drawStar (x, y, radius, opacity, color) {
+        skyContext.fillStyle = `rgba(${color}, ${opacity})`;
+        skyContext.beginPath();
+        skyContext.arc(x, y, radius, 0, Math.PI * 2);
+        skyContext.fill();
+      }
+
+      function addTwinkle (star, x, y, size, opacity, color) {
+        // Use the star's coordinates for timing without changing the seeded layout.
+        const period = 1.8 + x / width * 2.4;
+        star.classList.add('spark', 'background-star');
+        star.style.setProperty('--x', `${x / width * 100}%`);
+        star.style.setProperty('--y', `${y / height * 100}%`);
+        star.style.setProperty('--size', `${size}px`);
+        star.style.setProperty('--color', `rgb(${color})`);
+        star.style.setProperty('--brightness', opacity);
+        star.style.setProperty('--period', `${period}s`);
+        star.style.setProperty('--delay', `${-2 * period * y / height}s`);
+        twinkles.append(star);
+      }
+
+      const count = Math.round(Math.min(730, Math.max(310, width * .51)));
+      for (let i = 0; i < count; i += 1) {
+        const x = random() * width;
+        const y = random() * height;
+        const radius = .3 + random() ** 3.4 * 1.25;
+        const opacity = .18 + random() ** 1.8 * .68;
+        const color = random() < .52 ? '255, 193, 231' : '232, 233, 255';
+
+        if (radius > 1.17) drawStar(x, y, radius * 2.8, opacity * .15, color);
+        if (i % 22 === 0) {
+          const dot = document.createElement('span');
+          dot.className = 'background-star--dot';
+          addTwinkle(dot, x, y, Math.max(2, radius * 2), opacity, color);
+        } else {
+          drawStar(x, y, radius, opacity, color);
+        }
+      }
+
+      // Fine stardust follows a diagonal across the wider star field.
+      for (let i = 0; i < count * .75; i += 1) {
+        const across = random();
+        const drift = (random() + random() + random() - 1.5) * .3;
+        const y = .72 - across * .58 + drift;
+        const opacity = (.1 - Math.abs(drift) * .19) * (.25 + random());
+        drawStar(across * width, y * height, .3 + random() * .43, Math.max(0, opacity), '232, 188, 247');
+      }
+
+      for (let i = 0; i < Math.round(count / 20); i += 1) {
+        const x = (.03 + random() * .94) * width;
+        const y = (.07 + random() * .58) * height;
+        const size = 1.4 + random() ** 2 * 2.5;
+        const color = i % 2 ? '255, 199, 232' : '238, 239, 255';
+        drawStar(x, y, size * 1.4, .08, color);
+        const glint = document.createElementNS(svgNamespace, 'svg');
+        const shape = document.createElementNS(svgNamespace, 'use');
+        glint.setAttribute('viewBox', '0 0 24 24');
+        shape.setAttribute('href', '#diamond');
+        shape.setAttribute('fill', 'currentColor');
+        glint.append(shape);
+        addTwinkle(glint, x, y, size * 2, .27 + random() * .39, color);
+      }
+
+      twinkleField.replaceChildren(twinkles);
+    }
+
+    paintSky();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(paintSky).observe(sky);
+    } else {
+      window.addEventListener('resize', paintSky);
+    }
+
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const replayButton = document.querySelector('.action--replay');
+    const confluence = document.querySelector('.confluence');
+    const titleFinish = document.querySelector('.title-finish');
+    const stars = ['pink', 'silver'].map((color) => {
+      const path = document.querySelector(`#${color}-route`);
+      return {
+        path,
+        length: path.getTotalLength(),
+        light: document.querySelector(`.moving-star--${color}`),
+        tails: document.querySelectorAll(`[data-tail="${color}"]`),
+      };
+    });
+
+    let animationFrame;
+
+    function drawTravel (star, progress) {
+      const distance = star.length * progress;
+      const position = star.path.getPointAtLength(distance);
+      star.light.style.setProperty('--x', `${position.x / 10}%`);
+      star.light.style.setProperty('--y', `${position.y / 4.4}%`);
+
+      const tailLength = Math.min(distance, star.length * .24 * Math.sin(progress * Math.PI) ** .65);
+      for (const tail of star.tails) {
+        tail.style.visibility = tailLength > 1 ? 'visible' : 'hidden';
+        tail.style.strokeDasharray = `0 ${distance - tailLength} ${tailLength} ${star.length}`;
+      }
+    }
+
+    function settle () {
+      cancelAnimationFrame(animationFrame);
+      for (const star of stars) drawTravel(star, 1);
+      confluence.style.opacity = '';
+      confluence.style.removeProperty('--burst');
+      titleFinish.style.opacity = '';
+    }
+
+    function playEncounter () {
+      if (motionPreference.matches) return;
+      cancelAnimationFrame(animationFrame);
+      const started = performance.now();
+
+      function animate (now) {
+        const elapsed = Math.min(1, Math.max(0, (now - started) / 4100));
+        const travel = Math.min(1, elapsed / .82);
+        const progress = (1 - Math.cos(travel * Math.PI)) / 2;
+        for (const star of stars) drawTravel(star, progress);
+
+        const reveal = Math.min(1, Math.max(0, (elapsed - .67) / .26));
+        const flash = Math.max(0, 1 - Math.abs(elapsed - .82) / .18);
+        confluence.style.opacity = .16 + .16 * reveal + .64 * flash;
+        confluence.style.setProperty('--burst', 1 + .47 * flash);
+        titleFinish.style.opacity = .2 + .8 * reveal;
+
+        if (elapsed < 1) {
+          animationFrame = requestAnimationFrame(animate);
+        } else {
+          settle();
+        }
+      }
+
+      animate(started);
+    }
+
+    replayButton.hidden = false;
+    replayButton.addEventListener('click', playEncounter);
+    motionPreference.addEventListener('change', () => {
+      if (motionPreference.matches) settle();
+    });
+    playEncounter();
+  </script>
+</body>
+
+</html>

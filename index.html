@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-season="autumn">
 
 <head>
   <meta charset="utf-8">
@@ -68,10 +68,10 @@
       grid-template-rows: auto 1fr auto;
       overflow: hidden;
       background:
-        radial-gradient(ellipse at 50% 36%, #242347 0, transparent 55%),
-        radial-gradient(ellipse at 13% 60%, #30203d 0, transparent 50%),
-        radial-gradient(ellipse at 89% 45%, #141f43 0, transparent 47%),
-        #0a0d20;
+        radial-gradient(ellipse at 50% 36%, var(--sky-center) 0, transparent 55%),
+        radial-gradient(ellipse at 13% 60%, var(--sky-left) 0, transparent 50%),
+        radial-gradient(ellipse at 89% 45%, var(--sky-right) 0, transparent 47%),
+        var(--night);
     }
 
     .nebula {
@@ -79,10 +79,9 @@
       z-index: -3;
       inset: -16%;
       background:
-        radial-gradient(ellipse 33% 18% at 34% 50%, #d16eb35c, #a051a62e 53%, transparent 100%),
-        radial-gradient(ellipse 43% 15% at 62% 40%, #997ce553, #7159b728 60%, transparent 100%),
-        radial-gradient(ellipse 23% 11% at 72% 32%, #d2a1ff3d, transparent 100%),
-        radial-gradient(ellipse 41% 27% at 47% 52%, #542f8173, transparent 100%);
+        radial-gradient(ellipse 33% 18% at 34% 50%, var(--cloud-pink), transparent 100%),
+        radial-gradient(ellipse 43% 15% at 62% 40%, var(--cloud-silver), transparent 100%),
+        radial-gradient(ellipse 23% 11% at 72% 32%, var(--cloud-silver), transparent 100%);
       opacity: .8;
       transform: rotate(-13deg);
       animation: nebula-drift 22s ease-in-out infinite alternate;
@@ -190,7 +189,7 @@
       position: absolute;
       z-index: -1;
       inset: 0;
-      background: linear-gradient(180deg, #090c1c50, transparent 23%, transparent 45%, #0a0d207d 75%, #0a0d20 100%);
+      background: linear-gradient(180deg, #090c1c50, transparent 23%, transparent 45%, transparent 75%, var(--night) 100%);
       content: "";
       pointer-events: none;
     }
@@ -377,13 +376,12 @@
     .moon::before {
       inset: -65%;
       background: radial-gradient(circle closest-side,
-          #fff9f4b3 38%, #fff5f19c 42%, #f5dcff6e 48%,
-          #edbdf64a 56%, #d0a6f022 72%, #b898e909 87%, transparent);
+          var(--moon-light) 38%, var(--moon-halo) 48%, transparent 86%);
     }
 
     .moon::after {
       inset: 2%;
-      background: radial-gradient(circle at 46% 40%, #fffefa 15%, #fdf9ff 57%, #eee3ff 100%);
+      background: radial-gradient(circle at 46% 40%, #fffefa 15%, var(--moon-surface) 100%);
       box-shadow: inset 0 0 0 1px #fff9f4b3, 0 0 12px #fff4ed9c, 0 0 35px #ffe0f459;
     }
 
@@ -558,7 +556,7 @@
       position: relative;
       z-index: 1;
       width: var(--heart-size);
-      aspect-ratio: 1.12;
+      aspect-ratio: 1000 / 950;
       margin-top: clamp(-1.5rem, -2.4svh, -.75rem);
       padding-top: calc(var(--heart-size) * .225);
       text-align: center;
@@ -766,7 +764,7 @@
       justify-items: center;
       padding: clamp(4rem, 9vw, 8.5rem) var(--gutter) clamp(4rem, 8vw, 7rem);
       background:
-        radial-gradient(ellipse at 50% 37%, #29223e 0, #0a0d2000 73%),
+        radial-gradient(ellipse at 50% 37%, var(--sky-center) 0, transparent 73%),
         var(--night);
     }
 
@@ -947,8 +945,7 @@
       }
 
       .dedication {
-        aspect-ratio: .86;
-        padding-top: calc(var(--heart-size) * .29);
+        padding-top: calc(var(--heart-size) * .225);
       }
 
       h1 {
@@ -965,6 +962,15 @@
         margin-inline: auto;
         font-size: 1rem;
         letter-spacing: .02em;
+      }
+
+      .reunion {
+        gap: .1rem;
+        margin-top: .5rem;
+      }
+
+      .reunion-date {
+        font-size: .64rem;
       }
 
       .actions {
@@ -1016,6 +1022,151 @@
         display: none;
       }
     }
+    :root,
+    [data-season="autumn"] {
+      --night: #1d1720;
+      --sky-center: #493746;
+      --sky-left: #523832;
+      --sky-right: #302839;
+      --cloud-pink: #d6a16b35;
+      --cloud-silver: #c8b8d136;
+      --moon-light: #fff0d8a8;
+      --moon-halo: #e3bd8060;
+      --moon-surface: #ffedd7;
+      --weather-color: #e0b775;
+    }
+
+    [data-season="spring"] {
+      --night: #251827;
+      --sky-center: #573c58;
+      --sky-left: #62364c;
+      --sky-right: #3e2c51;
+      --cloud-pink: #ed97c450;
+      --cloud-silver: #c9afff38;
+      --moon-light: #fff1f8ad;
+      --moon-halo: #fac0e770;
+      --moon-surface: #fff0f7;
+      --weather-color: #f5b6d1;
+    }
+
+    [data-season="summer"] {
+      --night: #080f26;
+      --sky-center: #19344e;
+      --sky-left: #1a2348;
+      --sky-right: #103d49;
+      --cloud-pink: #9073cf38;
+      --cloud-silver: #6bbed32c;
+      --moon-light: #fffbeaaf;
+      --moon-halo: #a6cefc69;
+      --moon-surface: #edf4ff;
+      --weather-color: #f6dfa0;
+    }
+
+    [data-season="winter"] {
+      --night: #111c2e;
+      --sky-center: #344d65;
+      --sky-left: #283751;
+      --sky-right: #254658;
+      --cloud-pink: #a7b6d936;
+      --cloud-silver: #c6e6f840;
+      --moon-light: #effaffb5;
+      --moon-halo: #bfddff78;
+      --moon-surface: #e4f2ff;
+      --weather-color: #ecf6ff;
+    }
+
+    .season-picker {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      justify-items: center;
+      gap: .6rem;
+      margin: .3rem 0 1.65rem;
+    }
+
+    .season-controls {
+      display: flex;
+      gap: .25rem;
+      padding: .25rem;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: #0d11204d;
+    }
+
+    .season-controls button {
+      min-width: 44px;
+      min-height: 44px;
+      padding: .3rem .65rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      font-size: .83rem;
+      transition: background .2s, color .2s;
+    }
+
+    .season-controls button:hover { color: var(--silver); background: #ffffff0c; }
+    .season-controls button[aria-pressed="true"] { border-color: #f2d4e747; color: #ffe9f5; background: #f4bbd524; }
+    .season-name { margin: 0; color: var(--muted); font-size: .75rem; letter-spacing: .24em; }
+
+    .season-weather {
+      position: absolute;
+      z-index: -2;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .season-particle {
+      position: absolute;
+      top: -32px;
+      left: var(--left);
+      width: var(--size);
+      height: var(--size);
+      color: var(--weather-color);
+      opacity: 0;
+      animation: seasonal-fall var(--duration) var(--delay) linear infinite;
+    }
+
+    .season-particle svg { width: 100%; height: 100%; animation: seasonal-sway 5s var(--delay) ease-in-out infinite alternate; }
+
+    @keyframes seasonal-fall {
+      0% { opacity: 0; transform: translate3d(0, 0, 0); }
+      12%, 80% { opacity: var(--opacity); }
+      100% { opacity: 0; transform: translate3d(var(--drift), var(--fall-distance), 0); }
+    }
+
+    @keyframes seasonal-sway {
+      from { transform: rotate(-28deg) rotateY(0); }
+      to { transform: rotate(35deg) rotateY(44deg); }
+    }
+
+    [data-season="summer"] .season-particle {
+      top: var(--rest-y);
+      filter: drop-shadow(0 0 5px #f5e7a2);
+      animation: firefly-float 4s var(--delay) ease-in-out infinite alternate;
+    }
+
+    [data-season="summer"] .season-particle svg { animation: none; }
+    [data-season="winter"] .season-particle svg { animation: none; }
+    .meteor-shower { display: none; }
+    [data-season="summer"] .meteor-shower { display: block; }
+
+    @keyframes firefly-float {
+      from { opacity: .2; transform: translate3d(0, 0, 0); }
+      to { opacity: .8; transform: translate3d(12px, -42px, 0); }
+    }
+
+    @media (max-width: 600px) {
+      .season-picker { margin-top: .6rem; margin-bottom: 1.3rem; }
+      .season-controls button { padding-inline: .5rem; }
+      .season-particle:nth-child(n + 9) { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .season-weather, [data-season] .meteor-shower { display: none; }
+      .season-controls button { transition: none; }
+    }
   </style>
 </head>
 
@@ -1025,6 +1176,7 @@
       <div class="nebula" aria-hidden="true"></div>
       <canvas class="starfield" aria-hidden="true"></canvas>
       <div class="twinkle-field" aria-hidden="true"></div>
+      <div class="season-weather" aria-hidden="true"></div>
       <div class="meteor-shower" aria-hidden="true">
         <span class="meteor" style="--x:9%;--y:15%;--delay:2s"></span>
         <span class="meteor meteor--silver" style="--x:92%;--y:19%;--delay:4.9s"></span>
@@ -1062,9 +1214,35 @@
       </header>
 
       <div class="hero-content">
+        <div class="season-picker">
+          <div class="season-controls" role="group" aria-label="选择四季氛围">
+            <button type="button" data-season-choice="auto" aria-pressed="true">自动</button>
+            <button type="button" data-season-choice="spring" aria-pressed="false">春</button>
+            <button type="button" data-season-choice="summer" aria-pressed="false">夏</button>
+            <button type="button" data-season-choice="autumn" aria-pressed="false">秋</button>
+            <button type="button" data-season-choice="winter" aria-pressed="false">冬</button>
+          </div>
+          <p class="season-name" aria-live="polite">秋 · 暖月金叶</p>
+        </div>
         <div class="observatory" role="img" aria-label="淡粉色星星 DD 和银白色星星 LXY 在满月下相遇">
           <svg class="sky-map" viewBox="0 0 1000 440" preserveAspectRatio="none">
             <defs>
+              <symbol id="season-petal" viewBox="0 0 24 30">
+                <path fill="currentColor" d="M12 1C8 8-1 9 3 19c3 8 13 13 18 6C28 16 16 10 12 1Z"/>
+                <path d="M12 8c1 8 3 12 5 16" fill="none" stroke="#fff0f6" stroke-opacity=".38"/>
+              </symbol>
+              <symbol id="season-leaf" viewBox="0 0 28 30">
+                <path fill="currentColor" d="M14 27C6 24-2 18 2 9 4 4 9 2 12 4l2 5 3-6c6-2 12 3 11 10-1 8-8 12-14 14Z"/>
+                <path d="m14 27-1-15m1 15L6 12m8 15 8-16m-8 16-3 3" fill="none" stroke="#82632f" stroke-opacity=".58"/>
+              </symbol>
+              <symbol id="season-firefly" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="9" fill="currentColor" opacity=".15"/>
+                <circle cx="10" cy="10" r="4" fill="currentColor"/>
+                <circle cx="10" cy="10" r="1.6" fill="#fff9e8"/>
+              </symbol>
+              <symbol id="season-snow" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="4.5" fill="currentColor"/>
+              </symbol>
               <linearGradient id="pink-route-color">
                 <stop stop-color="#f0a9db" stop-opacity=".16" />
                 <stop offset="1" stop-color="#ffd0eb" stop-opacity=".65" />
@@ -1148,7 +1326,7 @@
         </div>
 
         <div class="dedication">
-          <svg class="dedication-heart" viewBox="0 0 1000 950" preserveAspectRatio="none" aria-hidden="true">
+          <svg class="dedication-heart" viewBox="0 0 1000 950" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <defs>
               <path id="dedication-heart-shape" vector-effect="non-scaling-stroke"
                 d="M500 197C420 72 273 14 144 78 30 135 0 253 34 394 72 585 231 774 500 919 769 774 928 585 966 394 1000 253 970 135 856 78 727 14 580 72 500 197Z" />
@@ -1243,6 +1421,7 @@
     </section>
 
     <section class="letter-section" id="letter" aria-labelledby="letter-title">
+      <div class="season-weather" aria-hidden="true"></div>
       <p class="eyebrow">02 / 写给我们</p>
       <article class="letter">
         <div class="letter-mark" aria-hidden="true">
@@ -1508,6 +1687,96 @@
       if (motionPreference.matches) settle();
     });
     playEncounter();
+
+    const seasonNames = {
+      spring: '春 · 月下花影',
+      summer: '夏 · 星夜萤火',
+      autumn: '秋 · 暖月金叶',
+      winter: '冬 · 银月初雪',
+    };
+    const seasonSymbols = {
+      spring: 'season-petal', summer: 'season-firefly',
+      autumn: 'season-leaf', winter: 'season-snow',
+    };
+    const weatherLayers = document.querySelectorAll('.season-weather');
+    const seasonButtons = document.querySelectorAll('[data-season-choice]');
+    let seasonChoice = 'auto';
+    let activeSeason;
+
+    function seasonForDate (date) {
+      const month = new Date(date.getTime() + beijingOffset).getUTCMonth() + 1;
+      if (month >= 3 && month <= 5) return 'spring';
+      if (month >= 6 && month <= 8) return 'summer';
+      if (month >= 9 && month <= 11) return 'autumn';
+      return 'winter';
+    }
+
+    function sizeWeatherLayer (layer) {
+      layer.style.setProperty('--fall-distance', `${layer.clientHeight + 64}px`);
+    }
+
+    function drawSeasonWeather (season) {
+      weatherLayers.forEach((layer, layerIndex) => {
+        const particles = document.createDocumentFragment();
+        for (let index = 0; index < 14; index += 1) {
+          const fraction = (index * .618034 + layerIndex * .31) % 1;
+          const duration = 18 + index % 6 * 2.3;
+          const size = season === 'summer' ? 7 + index % 4 : season === 'winter' ? 5 + index % 5 : 12 + index % 5 * 1.7;
+          const particle = document.createElement('span');
+          particle.className = 'season-particle';
+          particle.style.setProperty('--left', `${4 + fraction * 88}%`);
+          particle.style.setProperty('--rest-y', `${18 + (index * 17 % 67)}%`);
+          particle.style.setProperty('--size', `${size}px`);
+          particle.style.setProperty('--duration', `${duration}s`);
+          particle.style.setProperty('--delay', `${-duration * ((index * .382 + .19) % 1)}s`);
+          particle.style.setProperty('--drift', `${(index % 2 ? -1 : 1) * (24 + index * 3)}px`);
+          particle.style.setProperty('--opacity', .35 + index % 4 * .1);
+          const art = document.createElementNS(svgNamespace, 'svg');
+          const symbol = document.createElementNS(svgNamespace, 'use');
+          symbol.setAttribute('href', `#${seasonSymbols[season]}`);
+          art.append(symbol);
+          particle.append(art);
+          particles.append(particle);
+        }
+        layer.replaceChildren(particles);
+        sizeWeatherLayer(layer);
+      });
+    }
+
+    function updateSeason () {
+      const season = seasonChoice === 'auto' ? seasonForDate(new Date()) : seasonChoice;
+      document.querySelector('.season-name').textContent = seasonNames[season];
+      seasonButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.seasonChoice === seasonChoice));
+      });
+      if (season === activeSeason) return;
+      activeSeason = season;
+      document.documentElement.dataset.season = season;
+      document.querySelector('meta[name="theme-color"]').content = getComputedStyle(document.documentElement).getPropertyValue('--night').trim();
+      drawSeasonWeather(season);
+    }
+
+    seasonButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        seasonChoice = button.dataset.seasonChoice;
+        updateSeason();
+      });
+    });
+
+    weatherLayers.forEach((layer) => {
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => sizeWeatherLayer(layer)).observe(layer);
+      } else {
+        window.addEventListener('resize', () => sizeWeatherLayer(layer));
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && seasonChoice === 'auto') updateSeason();
+    });
+    setInterval(() => {
+      if (seasonChoice === 'auto') updateSeason();
+    }, 60000);
+    updateSeason();
   </script>
 </body>
 
